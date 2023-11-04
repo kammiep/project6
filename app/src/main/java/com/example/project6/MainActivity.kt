@@ -7,6 +7,9 @@ import android.view.GestureDetector
 import java.util.Timer
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var gameView : GameView
+    private lateinit var pong : Pong
+    //private lateinit var detector : GestureDetector
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // need to comment out?
@@ -20,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         var statusBarHeight : Int  = resources.getDimensionPixelSize( statusBarId )
 
         gameView = GameView( this, width, height - statusBarHeight )
-        game = gameView.getGame()
+        pong = gameView.getPong()
         setContentView( gameView )
         /*
         // set up event handling
