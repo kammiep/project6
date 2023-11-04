@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         var statusBarHeight : Int  = resources.getDimensionPixelSize( statusBarId )
 
         gameView = GameView( this, width, height - statusBarHeight )
-        pong = gameView.getPong()
+        //pong = gameView.getPong()
         setContentView( gameView )
         /*
         // set up event handling
