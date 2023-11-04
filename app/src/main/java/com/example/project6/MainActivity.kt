@@ -1,9 +1,11 @@
 package com.example.project6
 
+import android.app.Activity
 import android.content.res.Resources
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.GestureDetector
+import android.view.MotionEvent
 import java.util.Timer
 
 class MainActivity : AppCompatActivity() {
@@ -32,12 +34,24 @@ class MainActivity : AppCompatActivity() {
         detector.setOnDoubleTapListener( handler )
         */
 
-        /*
+
         // set schedule
         var gameTimer : Timer = Timer( )
         var gameTimerTask : GameTimerTask = GameTimerTask( this )
-        gameTimer.schedule( gameTimerTask, 0L, GameView.DELTA_TIME.toLong() )
-        */
+        gameTimer.schedule( gameTimerTask, 0L, 200L )
     }
 
+    fun updateModel() {
+        if (pong.isBallMoving()) {
+            pong.moveBall()
+        }
+    }
+
+    fun updateView() {
+        gameView.postInvalidate()
+    }
+
+    inner class TouchHandler : GestureDetector.SimpleOnGestureListener() {
+        // update paddle here
+    }
 }

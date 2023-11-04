@@ -7,8 +7,10 @@ class Pong {
     private var ballCenter : Point? = null
     private var ballAngle = 0f
     private var ballSpeed = 0f
+    private var ballMoving = true
     private var deltaTime = 10
     constructor(width:Int,height:Int) {
+        ballMoving = false
         ballRadius = 20f
         ballSpeed = 10f
         ballAngle = 45f
@@ -22,6 +24,16 @@ class Pong {
     fun getBallRadius():Float{
         return ballRadius
     }
+
+    fun startMovingBall() {
+        ballMoving = true
+    }
+
+    // Has the user tapped the screen to start the game yet
+    fun isBallMoving() : Boolean {
+        return ballMoving
+    }
+
 
     fun ballOffScreen():Boolean{
         return false
