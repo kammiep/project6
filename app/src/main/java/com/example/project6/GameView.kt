@@ -33,7 +33,7 @@ class GameView : View {
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
         canvas.drawRect(paddle, paint)
-        if(!pong.ballOffScreen()) {
+        if(!pong.ballAtBottom()) {
             canvas.drawCircle(
                 pong.getBallCenter().x.toFloat(), pong.getBallCenter().y.toFloat(),
                 pong.getBallRadius(), paint

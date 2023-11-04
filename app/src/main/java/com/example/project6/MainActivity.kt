@@ -41,6 +41,13 @@ class MainActivity : AppCompatActivity() {
         gameTimer.schedule( gameTimerTask, 0L, 200L )
     }
 
+    override fun onTouchEvent(event:MotionEvent?):Boolean{
+        if(event != null){
+            pong.startMovingBall()
+        }
+        return super.onTouchEvent(event)
+    }
+
     fun updateModel() {
         if (pong.isBallMoving()) {
             pong.moveBall()
@@ -52,6 +59,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     inner class TouchHandler : GestureDetector.SimpleOnGestureListener() {
-        // update paddle here
+        override fun onSingleTapConfirmed(e:MotionEvent):Boolean{
+            return false
+        }
     }
 }
