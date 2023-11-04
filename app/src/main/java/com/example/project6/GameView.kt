@@ -12,6 +12,7 @@ class GameView : View {
     private var width : Int = 0
     private var height : Int  = 0
     private lateinit var paddle: Rect
+    private lateinit var pong : Pong
     constructor(context: Context, width:Int, height:Int) : super(context){
         this.width = width
         this.height = height
@@ -22,11 +23,21 @@ class GameView : View {
         paint.strokeWidth = 20.0f
 
         paddle = Rect(width/2-100,height-100,width/2+100,height-80)
+        pong = Pong(width,height)
+    }
+
+    fun getPong():Pong{
+        return pong
     }
 
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
-        canvas.drawCircle(width.toFloat()/2,20.0f,20.0f,paint)
-        canvas.drawRect(paddle,paint)
+        canvas.drawRect(paddle, paint)
+        if(!pong.ballOffScreen()) {
+            canvas.drawCircle(
+                pong.getBallCenter().x.toFloat(), pong.getBallCenter().y.toFloat(),
+                pong.getBallRadius(), paint
+            )
+        }
     }
 }

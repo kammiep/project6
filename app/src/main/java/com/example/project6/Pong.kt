@@ -3,26 +3,22 @@ package com.example.project6
 import android.graphics.Point
 
 class Pong {
-    private var ballRadius = 0
+    private var ballRadius = 0f
     private var ballCenter : Point? = null
-    private var ballAngle = 45
+    private var ballAngle = 0f
     private var ballSpeed = 0f
-    constructor(newBallRadius : Int, newBallSpeed : Float) {
-        setBallSpeed(newBallSpeed)
-        setBallRadius(newBallRadius)
-
-
+    constructor(width:Int,height:Int) {
+        ballRadius = 20f
+        ballSpeed = 10f
+        ballAngle = 45f
+        ballCenter = Point(width/2,20)
     }
 
-    fun setBallSpeed(newBallSpeed : Float) {
-        if (newBallSpeed > 0) {
-            ballSpeed = newBallSpeed
-        }
+    fun getBallCenter():Point{
+        return ballCenter!!
     }
 
-    fun setBallRadius(newBallRadius : Int) {
-        if (newBallRadius > 0) {
-            ballRadius = newBallRadius
-        }
+    fun getBallRadius():Float{
+        return ballRadius
     }
 }
