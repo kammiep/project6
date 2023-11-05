@@ -2,15 +2,17 @@ package com.example.project6
 
 import android.app.Activity
 import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
 import java.util.Timer
+import kotlin.math.roundToInt
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
     private lateinit var gameView : GameView
     private lateinit var pong : Pong
+    private lateinit var detector : GestureDetector
     //private lateinit var detector : GestureDetector
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,12 +29,11 @@ class MainActivity : AppCompatActivity() {
         gameView = GameView( this, width, height - statusBarHeight )
         pong = gameView.getPong()
         setContentView( gameView )
-        /*
+
         // set up event handling
         var handler : TouchHandler = TouchHandler( )
         detector = GestureDetector( this, handler )
         detector.setOnDoubleTapListener( handler )
-        */
 
 
         // set schedule
@@ -42,8 +43,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onTouchEvent(event:MotionEvent?):Boolean{
-        if(event != null){
-            pong.startMovingBall()
+        if (event != null) {
+            detector.onTouchEvent(event!!)
         }
         return super.onTouchEvent(event)
     }
@@ -60,7 +61,24 @@ class MainActivity : AppCompatActivity() {
 
     inner class TouchHandler : GestureDetector.SimpleOnGestureListener() {
         override fun onSingleTapConfirmed(e:MotionEvent):Boolean{
-            return false
+            if(e != null && !pong.isBallMoving()){
+                pong.startMovingBall()
+            }
+            return true
+        }
+
+        override fun onScroll(
+            e1: MotionEvent?,
+            e2: MotionEvent,
+            distanceX: Float,
+            distanceY: Float
+        ): Boolean {
+            var touchX : Int = e2.x.roundToInt()
+
+            // get rectangle, change location
+            Log.w("MainActivity","Calling movePaddle " + touchX.toString())
+            pong.movePaddle(touchX)
+            return super.onScroll(e1, e2, distanceX, distanceY)
         }
     }
 }

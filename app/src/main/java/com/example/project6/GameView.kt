@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
+import android.util.Log
 import android.view.View
 
 class GameView : View {
@@ -23,7 +24,7 @@ class GameView : View {
         paint.strokeWidth = 20.0f
 
         paddle = Rect(width/2-100,height-100,width/2+100,height-80)
-        pong = Pong(width,height)
+        pong = Pong(width,height, width/2-100, height-100, width/2+100, height-80)
     }
 
     fun getPong():Pong{
@@ -32,6 +33,9 @@ class GameView : View {
 
     override fun onDraw(canvas: Canvas){
         super.onDraw(canvas)
+        Log.w("GameView","Drawing paddle at left " + pong.getPaddleLeft().toString())
+        paddle = Rect(pong.getPaddleLeft(), pong.getPaddleTop(),
+            pong.getPaddleRight(), pong.getPaddleBottom())
         canvas.drawRect(paddle, paint)
         if(!pong.ballAtBottom()) {
             canvas.drawCircle(

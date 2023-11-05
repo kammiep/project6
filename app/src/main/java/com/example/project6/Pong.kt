@@ -15,7 +15,11 @@ class Pong {
     private var width = 0
     private var height = 0
     private var left = true
-    constructor(width:Int,height:Int) {
+    private var paddleLeft = 0;
+    private var paddleTop = 0;
+    private var paddleRight = 0;
+    private var paddleBottom = 0;
+    constructor(width:Int,height:Int, paddleLeft:Int, paddleTop:Int, paddleRight:Int, paddleBottom:Int) {
         ballMoving = false
         ballRadius = 20f
         ballSpeed = 10f
@@ -23,6 +27,10 @@ class Pong {
         this.width = width
         this.height = height
         ballCenter = Point(width/2,20)
+        this.paddleLeft = paddleLeft
+        this.paddleTop = paddleTop
+        this.paddleRight = paddleRight
+        this.paddleBottom = paddleBottom
     }
 
     fun getBallCenter():Point{
@@ -31,6 +39,34 @@ class Pong {
 
     fun getBallRadius():Float{
         return ballRadius
+    }
+
+    fun getPaddleLeft():Int {
+        return paddleLeft
+    }
+
+    fun getPaddleRight():Int {
+        return paddleRight
+    }
+
+    fun getPaddleTop():Int {
+        return paddleTop
+    }
+
+    fun getPaddleBottom():Int {
+        return paddleBottom
+    }
+
+    fun movePaddle(x:Int) {
+        val distanceFromX : Int = ((paddleRight - paddleLeft)/2)
+        paddleLeft = x - distanceFromX
+        if (paddleLeft < 0) {
+            paddleLeft = 0
+        }
+        paddleRight = x + distanceFromX
+        if (paddleRight > width) {
+            paddleRight = width
+        }
     }
 
     fun startMovingBall() {
