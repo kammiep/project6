@@ -15,15 +15,18 @@ class Pong {
     private var width = 0
     private var height = 0
     private var left = true
+    private var up = false
     private var paddleLeft = 0;
     private var paddleTop = 0;
     private var paddleRight = 0;
     private var paddleBottom = 0;
+    private var score = 0
     constructor(width:Int,height:Int, paddleLeft:Int, paddleTop:Int, paddleRight:Int, paddleBottom:Int) {
         ballMoving = false
         ballRadius = 20f
         ballSpeed = 10f
         ballAngle = 45f
+        score = 0
         this.width = width
         this.height = height
         ballCenter = Point(width/2,20)
@@ -76,9 +79,23 @@ class Pong {
         return ballCenter!!.y + 50 >= height
     }
 
-    fun ballAtWall():Boolean{
-        return (ballCenter!!.x + 50 - ballRadius >= width) || (ballCenter!!.x - 50 <= 0)||
-                (ballCenter!!.y - 50 <= 0)
+    private fun ballAtWall():Boolean{
+        if((ballCenter!!.x + 50 - ballRadius <= paddleRight) && (ballCenter!!.x - 50 - ballRadius >= paddleLeft)
+            && (ballCenter!!.y + 50 - ballRadius >= paddleTop) && (ballCenter!!.y - 50 - ballRadius <= paddleBottom)){
+            up = true
+            left = !left
+            score++
+            return true
+        }else if(ballCenter!!.y - 50 - ballRadius <= 0){
+            up = false
+            left = !left
+            return true
+        }
+        return (ballCenter!!.x + 50 - ballRadius >= width) || (ballCenter!!.x - 50 - ballRadius <= 0)
+    }
+
+    fun getScore():Int{
+        return score
     }
 
     fun moveBall() {
@@ -89,7 +106,11 @@ class Pong {
         }else{
             ballCenter!!.x -= (ballSpeed*Math.cos(ballAngle.toDouble())*deltaTime).toInt()
         }
-        ballCenter!!.y += (ballSpeed*Math.sin(ballAngle.toDouble())*deltaTime).toInt()
+        if(!up){
+            ballCenter!!.y += (ballSpeed*Math.sin(ballAngle.toDouble())*deltaTime).toInt()
+        }else{
+            ballCenter!!.y -= (ballSpeed*Math.sin(ballAngle.toDouble())*deltaTime).toInt()
+        }
         Log.w("Pong","ball is here: (" + ballCenter!!.x + ", " + ballCenter!!.y + ")")
     }
 }
