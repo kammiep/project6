@@ -60,13 +60,7 @@ class Pong {
     fun movePaddle(x:Int) {
         val distanceFromX : Int = ((paddleRight - paddleLeft)/2)
         paddleLeft = x - distanceFromX
-        if (paddleLeft < 0) {
-            paddleLeft = 0
-        }
         paddleRight = x + distanceFromX
-        if (paddleRight > width) {
-            paddleRight = width
-        }
     }
 
     fun startMovingBall() {
