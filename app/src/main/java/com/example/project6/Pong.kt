@@ -42,13 +42,8 @@ class Pong {
         return ballMoving
     }
 
-
-    fun ballOffScreen():Boolean{
-        return false
-    }
-
     fun ballAtBottom():Boolean{
-        return ballCenter!!.y + ballRadius >= height
+        return ballCenter!!.y + 50 >= height
     }
 
     fun ballAtWall():Boolean{
@@ -60,11 +55,11 @@ class Pong {
         if(ballAtWall())
             left = !left
         if(!left){
-            ballCenter!!.x += 50
+            ballCenter!!.x += (ballSpeed*Math.cos(ballAngle.toDouble())*deltaTime).toInt()
         }else{
-            ballCenter!!.x -= 50
+            ballCenter!!.x -= (ballSpeed*Math.cos(ballAngle.toDouble())*deltaTime).toInt()
         }
-        ballCenter!!.y += 50
+        ballCenter!!.y += (ballSpeed*Math.sin(ballAngle.toDouble())*deltaTime).toInt()
         Log.w("Pong","ball is here: (" + ballCenter!!.x + ", " + ballCenter!!.y + ")")
     }
 }
