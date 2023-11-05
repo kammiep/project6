@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.RelativeLayout
+import android.widget.TextView
 import java.util.Timer
 import kotlin.math.roundToInt
 
@@ -13,7 +15,9 @@ class MainActivity : Activity() {
     private lateinit var gameView : GameView
     private lateinit var pong : Pong
     private lateinit var detector : GestureDetector
-    //private lateinit var detector : GestureDetector
+    lateinit var params : RelativeLayout.LayoutParams
+    lateinit var tv : TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // need to comment out?
@@ -40,6 +44,11 @@ class MainActivity : Activity() {
         var gameTimer : Timer = Timer( )
         var gameTimerTask : GameTimerTask = GameTimerTask( this )
         gameTimer.schedule( gameTimerTask, 0L, 200L )
+
+        tv = TextView(this)
+        params = RelativeLayout.LayoutParams(100,100)
+        params.leftMargin = 100
+        params.rightMargin = 100
     }
 
     override fun onTouchEvent(event:MotionEvent?):Boolean{
@@ -52,6 +61,9 @@ class MainActivity : Activity() {
     fun updateModel() {
         if (pong.isBallMoving()) {
             pong.moveBall()
+        }
+        if (pong.ballAtBottom()) {
+
         }
     }
 
