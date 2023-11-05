@@ -75,6 +75,10 @@ class MainActivity : Activity() {
         ): Boolean {
             var touchX : Int = e2.x.roundToInt()
 
+            if(!pong.isBallMoving()){
+                pong.startMovingBall()
+            }
+
             // get rectangle, change location
             Log.w("MainActivity","Calling movePaddle " + touchX.toString())
             pong.movePaddle(touchX)
