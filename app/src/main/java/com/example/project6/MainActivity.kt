@@ -62,9 +62,6 @@ class MainActivity : Activity() {
         if (pong.isBallMoving()) {
             pong.moveBall()
         }
-        if (pong.ballAtBottom()) {
-
-        }
     }
 
     fun updateView() {

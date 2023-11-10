@@ -8,8 +8,6 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.util.Log
 import android.view.View
-import android.widget.RelativeLayout
-import android.widget.TextView
 
 class GameView : View {
     private lateinit var paint : Paint
@@ -59,6 +57,7 @@ class GameView : View {
                 displayText += "\n\nNew best score!"
                 var editor = pref.edit()
                 editor.putInt("best", score)
+                editor.commit()
             }
             paint.setTextSize(60F);
             canvas.drawText(displayText, 18F, 60F, paint)
