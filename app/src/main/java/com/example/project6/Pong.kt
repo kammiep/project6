@@ -2,8 +2,6 @@ package com.example.project6
 
 import android.graphics.Point
 import android.util.Log
-import kotlin.math.cos
-import kotlin.math.sin
 
 class Pong {
     private var ballRadius = 0f
@@ -21,12 +19,14 @@ class Pong {
     private var paddleRight = 0;
     private var paddleBottom = 0;
     private var score = 0
+    private var hitPaddle = false
     constructor(width:Int,height:Int, paddleLeft:Int, paddleTop:Int, paddleRight:Int, paddleBottom:Int) {
         ballMoving = false
         ballRadius = 20f
         ballSpeed = 10f
         ballAngle = 45f
         score = 0
+        hitPaddle = false
         this.width = width
         this.height = height
         ballCenter = Point(width/2,20)
@@ -80,7 +80,7 @@ class Pong {
     }
 
     private fun ballAtWall():Boolean{
-        if((ballCenter!!.x + 50 - ballRadius <= paddleRight) && (ballCenter!!.x - 50 - ballRadius >= paddleLeft)
+        if((ballCenter!!.x + 50 <= paddleRight) && (ballCenter!!.x - 50 >= paddleLeft)
             && (ballCenter!!.y + 50 - ballRadius >= paddleTop) && (ballCenter!!.y - 50 - ballRadius <= paddleBottom)){
             up = true
             left = !left
@@ -92,6 +92,14 @@ class Pong {
             return true
         }
         return (ballCenter!!.x + 50 - ballRadius >= width) || (ballCenter!!.x - 50 - ballRadius <= 0)
+    }
+
+    fun checkHit():Boolean{
+        if((ballCenter!!.x + 50 <= paddleRight) && (ballCenter!!.x - 50 >= paddleLeft)
+            && (ballCenter!!.y + 50 - ballRadius >= paddleTop) && (ballCenter!!.y - 50 - ballRadius <= paddleBottom)){
+            return true
+        }
+        return false
     }
 
     fun getScore():Int{

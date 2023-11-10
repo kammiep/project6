@@ -2,6 +2,7 @@ package com.example.project6
 
 import android.app.Activity
 import android.content.res.Resources
+import android.media.SoundPool
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
@@ -17,6 +18,8 @@ class MainActivity : Activity() {
     private lateinit var detector : GestureDetector
     lateinit var params : RelativeLayout.LayoutParams
     lateinit var tv : TextView
+    lateinit var pool : SoundPool
+    var hitSound = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +32,9 @@ class MainActivity : Activity() {
         // retrieve status bar height
         var statusBarId : Int = resources.getIdentifier( "status_bar_height", "dimen", "android" )
         var statusBarHeight : Int  = resources.getDimensionPixelSize( statusBarId )
+        var poolBuilder : SoundPool.Builder = SoundPool.Builder()
+        pool = poolBuilder.build()
+        hitSound = pool.load(this, R.raw.hit,1)
 
         gameView = GameView( this, width, height - statusBarHeight )
         pong = gameView.getPong()
@@ -59,6 +65,9 @@ class MainActivity : Activity() {
     }
 
     fun updateModel() {
+        if(pong.checkHit()){
+            pool.play(hitSound,1.0f,1.0f,0,0,1.0f)
+        }
         if (pong.isBallMoving()) {
             pong.moveBall()
         }
